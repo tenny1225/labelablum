@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/home/noahkong/AndroidStudioProjects/LabelAlbum/photoview/src/main/assets"/><source path="/home/noahkong/AndroidStudioProjects/LabelAlbum/photoview/build/generated/assets/shaders/debug"/></dataSet><dataSet config="debug"><source path="/home/noahkong/AndroidStudioProjects/LabelAlbum/photoview/src/debug/assets"/></dataSet></merger>

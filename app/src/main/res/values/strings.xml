@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">LabelAlbum</string>
+    <string name="label_album">标签相册</string>
+    <string name="normal_album">普通相册</string>
+    <string name="edit">编辑</string>
+    <string name="all">全部</string>
+    <string name="image_count_format">%s张</string>
+    <string name="image_date_fromat">yyyy年MM月dd日</string>
+
+    <string name="album_share_element_name">asen</string>
+</resources>
