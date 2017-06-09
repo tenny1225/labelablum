@@ -79,7 +79,7 @@ public class AlbumShowFragment extends BaseFragment implements BaseRecyclerAdapt
     @Override
     protected void initWidget(View rootView) {
         super.initWidget(rootView);
-        if(albumEntity==null){
+        if (albumEntity == null) {
             return;
         }
         recycler = (RecyclerView) rootView.findViewById(R.id.recycler);
@@ -96,20 +96,20 @@ public class AlbumShowFragment extends BaseFragment implements BaseRecyclerAdapt
     @Override
     public void onItemHolderClick(BaseRecyclerAdapter.VH holder, ImageEntity imageEntity) {
 
-        AlbumEntity entity = new AlbumEntity();
+       /* AlbumEntity entity = new AlbumEntity();
         entity.imageList = albumEntity.imageList;
         entity.currentIndex = albumEntity.imageList.indexOf(imageEntity);
 
-        ImageShowFragment fragment = ImageShowFragment.newInstance(new BundleEntity<AlbumEntity>(activity, entity));
-        fragment.setAlbumEntity(entity);
-       // ViewCompat.setTransitionName(holder.<ImageView>$(R.id.iv_image), imageEntity.uniqueString);
+        ImageShowFragment fragment = ImageShowFragment.newInstance(new BundleEntity<>(activity, entity));
+        fragment.setAlbumEntity(entity);*/
+        ImageShowNotScrollFragment fragment = ImageShowNotScrollFragment.newInstance(imageEntity);
+        fragment.setImageEntity(imageEntity);
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
             setExitTransition(new Fade());
             fragment.setEnterTransition(new Fade());
-
             fragment.setSharedElementReturnTransition(new DetailTransition());
-
             fragment.setSharedElementEnterTransition(new DetailTransition());
+
 
             fragment.transaction()
                     .addSharedElement(holder.<ImageView>$(R.id.iv_image), getResources().getString(R.string.album_share_element_name))
@@ -120,7 +120,7 @@ public class AlbumShowFragment extends BaseFragment implements BaseRecyclerAdapt
     }
 
     @Override
-    public void onItemHolderLongClick(BaseRecyclerAdapter.VH holder,ImageEntity imageEntity) {
+    public void onItemHolderLongClick(BaseRecyclerAdapter.VH holder, ImageEntity imageEntity) {
 
     }
 }

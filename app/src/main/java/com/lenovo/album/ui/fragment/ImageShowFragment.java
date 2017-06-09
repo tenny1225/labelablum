@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
@@ -122,7 +123,11 @@ public class ImageShowFragment extends BaseFragment {
 
         setCurrentImage(albumEntity.currentIndex);
 
+
         vp.setAdapter(new PagerAdapter() {
+
+
+
             @Override
             public int getCount() {
                 return albumEntity.imageList.size();
@@ -135,14 +140,12 @@ public class ImageShowFragment extends BaseFragment {
 
             @Override
             public Object instantiateItem(ViewGroup container, int position) {
-                PhotoView view = new PhotoView(activity);
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-                    view.setTransitionName(getResources().getString(R.string.album_share_element_name));
-                }
 
-                view.enable();
-                view.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                ImageLoaderFactory.getLoader().displayQuality(view, albumEntity.imageList.get(position).path);
+                View view = LayoutInflater.from(container.getContext()).inflate(R.layout.vp_item_image,container,false);
+                PhotoView photoView = (PhotoView) view.findViewById(R.id.photo_view);
+                photoView.enable();
+                photoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                ImageLoaderFactory.getLoader().displayQuality(photoView, albumEntity.imageList.get(position).path);
                 container.addView(view);
                 return view;
             }
