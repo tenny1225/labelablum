@@ -7,10 +7,10 @@ import android.provider.MediaStore;
 
 import com.lenovo.album.base.Constant;
 import com.lenovo.album.contract.ImageRecognitionContract;
+import com.lenovo.album.event.LabelDataChangeEvent;
 import com.lenovo.album.event.RecognitionCompetedEvent;
-import com.lenovo.album.model.entity.ImageCursorLoader;
-import com.lenovo.album.model.entity.RecognitionTask;
-import com.lenovo.album.service.ImageRecognitionService;
+import com.lenovo.album.model.helper.ImageCursorLoader;
+import com.lenovo.album.model.helper.RecognitionTask;
 import com.lenovo.common.manager.AsyncExecutorQueueManager;
 
 import org.greenrobot.eventbus.EventBus;
@@ -47,7 +47,7 @@ public class ImageRecognitionModel implements ImageRecognitionContract.Model ,Co
                 asyncExecutorQueueManager.addTask(new AsyncExecutorQueueManager.SimpleTask() {
                     @Override
                     protected Void doInBackground(Void... params) {
-                        EventBus.getDefault().post(new RecognitionCompetedEvent());
+                        EventBus.getDefault().post(new LabelDataChangeEvent());
                         return null;
                     }
 

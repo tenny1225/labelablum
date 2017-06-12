@@ -1,4 +1,4 @@
-package com.lenovo.album.model.entity;
+package com.lenovo.album.model.helper;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;

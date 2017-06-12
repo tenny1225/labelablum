@@ -7,11 +7,8 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 
-import com.lenovo.album.MyApplication;
 import com.lenovo.album.contract.ImageRecognitionContract;
-import com.lenovo.album.event.RecognitionCompetedEvent;
 import com.lenovo.album.model.ImageRecognitionModel;
-import com.lenovo.album.model.entity.ImageCursorLoader;
 import com.lenovo.album.base.Constant;
 
 /**

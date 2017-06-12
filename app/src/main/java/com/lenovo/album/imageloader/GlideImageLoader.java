@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.lenovo.album.R;
@@ -22,6 +23,23 @@ public class GlideImageLoader implements ImageLoaderContract {
         Glide.with(iv.getContext().getApplicationContext())
                 .load(url)
                 .transition(new DrawableTransitionOptions().crossFade())
+                .apply(options)
+                .thumbnail(0.5f)
+                .into(iv);
+    }
+
+    @Override
+    public void displayCircle(ImageView iv, String url) {
+        RequestOptions options = new RequestOptions();
+        options
+                //.placeholder(R.mipmap.ic_default)
+                .transform(new CircleCrop());
+
+        Glide.with(iv.getContext().getApplicationContext())
+                .load(url)
+
+                .transition(new DrawableTransitionOptions().crossFade())
+
                 .apply(options)
                 .thumbnail(0.5f)
                 .into(iv);

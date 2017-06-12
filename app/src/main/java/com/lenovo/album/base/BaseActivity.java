@@ -12,6 +12,7 @@ import android.view.WindowManager;
 
 
 import com.jaeger.library.StatusBarUtil;
+import com.lenovo.common.util.CommonUtil;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import me.yokeyword.fragmentation.SupportActivity;
@@ -45,7 +46,8 @@ public abstract class BaseActivity extends SupportActivity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
     }
-    protected void setStatusBarColor(int color){
+
+    protected void setStatusBarColor(int color) {
         //View rootView = getWindow().getDecorView();
         //rootView.setPadding(0,0,0,0);
     }
@@ -84,6 +86,35 @@ public abstract class BaseActivity extends SupportActivity {
      */
     protected void initSync() {
 
+    }
+
+    /**
+     * 设置全屏
+     */
+    public void setFullScreen() {
+
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+
+        params.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+
+        getWindow().setAttributes(params);
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
+    }
+
+    /**
+     * 取消全屏
+     */
+    public void cancelFullScreen() {
+
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+
+        params.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        getWindow().setAttributes(params);
+
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
     }
 
 }

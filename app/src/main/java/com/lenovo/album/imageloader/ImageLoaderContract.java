@@ -10,6 +10,7 @@ import android.widget.ImageView;
 public interface ImageLoaderContract {
 
     void display(ImageView iv,String url);
+    void displayCircle(ImageView iv,String url);
     void displayQuality(ImageView iv,String url);
     void display(ImageView iv,int id);
     void display(ImageView iv,int defaultId,String url);

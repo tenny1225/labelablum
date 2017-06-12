@@ -14,7 +14,10 @@ import android.support.v4.content.ContextCompat;
 
 import com.lenovo.album.R;
 import com.lenovo.album.base.BaseActivity;
+import com.lenovo.album.event.PermissionGatedEvent;
 import com.lenovo.album.service.ImageRecognitionService;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by noahkong on 17-6-7.
@@ -42,8 +45,7 @@ public class StartActivity extends BaseActivity {
     }
 
     private void startService() {
-        Intent intent = new Intent(getApplicationContext(), ImageRecognitionService.class);
-        bindService(intent, new RecognitionServiceConnection(), Context.BIND_AUTO_CREATE);
+        EventBus.getDefault().post(new PermissionGatedEvent());
 
         MainActivity.startSelf(this);
         finish();
@@ -62,14 +64,6 @@ public class StartActivity extends BaseActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    private static class RecognitionServiceConnection implements ServiceConnection {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-        }
 
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-        }
-    }
 
 }

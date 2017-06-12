@@ -98,13 +98,17 @@ public class FilletView extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        //super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int w = 0;
         int h = 0;
 
+
+
         if (MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.EXACTLY) {
-            h = MeasureSpec.getSize(widthMeasureSpec);
+            h = MeasureSpec.getSize(heightMeasureSpec);
+
         } else {
+
             Rect bound = new Rect();
             paint.setTextSize(textSize);
             paint.getTextBounds(text, 0, text.length(), bound);

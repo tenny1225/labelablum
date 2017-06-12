@@ -40,7 +40,7 @@ public abstract class BaseFragment extends SupportFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(getViewResource(), container, false);
-       int statusBarColor = getStatusBarColor();
+        int statusBarColor = getStatusBarColor();
         if (statusBarColor != -1 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (statusBarColor == 0) {
                 rootView = view;
@@ -65,6 +65,9 @@ public abstract class BaseFragment extends SupportFragment {
         initWidget(rootView);
         initSync();
         return rootView;
+    }
+    protected <T> T $(int id){
+        return (T) rootView.findViewById(id);
     }
 
     /**

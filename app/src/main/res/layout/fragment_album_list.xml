@@ -9,8 +9,16 @@
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:background="?attr/colorPrimary"
-        android:paddingLeft="30px"
-        android:paddingRight="30px">
+       >
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="?actionBarSize"
+            android:layout_height="?actionBarSize"
+            android:padding="30px"
+
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_search_white_36dp"
+            app:layout_auto_basewidth="height" />
 
         <TextView
             android:id="@+id/tv_album_type_name"
@@ -23,6 +31,7 @@
             android:textSize="36px" />
 
         <ImageView
+            android:id="@+id/iv_select"
             android:layout_width="30px"
             android:layout_height="30px"
             android:layout_centerVertical="true"
@@ -32,6 +41,7 @@
             app:layout_auto_basewidth="height" />
 
         <TextView
+            android:layout_marginRight="30px"
             android:id="@+id/tv_album_edit"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

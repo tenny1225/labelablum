@@ -1,4 +1,4 @@
-package com.lenovo.album.ui.adapter.decoration;
+package com.lenovo.album.ui.adapter.helper;
 
 import android.graphics.Canvas;
 import android.graphics.Color;

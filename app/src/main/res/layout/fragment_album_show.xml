@@ -8,15 +8,14 @@
     <com.zhy.autolayout.AutoRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:paddingLeft="30px"
-        android:paddingRight="30px">
+        android:background="?attr/colorPrimary">
 
         <ImageView
-            android:id="@+id/tv_back"
-            android:layout_width="60px"
-            android:layout_height="60px"
+            android:id="@+id/iv_back"
+            android:layout_width="?actionBarSize"
+            android:layout_height="?actionBarSize"
             android:layout_centerVertical="true"
+            android:padding="30px"
             android:scaleType="fitCenter"
             android:src="@mipmap/ic_arrow_back_white_36dp"
             app:layout_auto_basewidth="height" />
@@ -26,8 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="30px"
-            android:layout_toRightOf="@id/tv_back"
+
+            android:layout_toRightOf="@id/iv_back"
             android:gravity="center"
             android:text="@string/label_album"
             android:textColor="#fff"
@@ -50,5 +49,5 @@
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"/>
+        android:scrollbars="vertical" />
 </com.zhy.autolayout.AutoLinearLayout>

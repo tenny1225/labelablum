@@ -1,8 +1,10 @@
 package com.lenovo.common.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.view.WindowManager;
 
 import com.lenovo.common.R;
 
@@ -27,5 +29,14 @@ public class CommonUtil {
         int color = typedArray.getColor(0, Color.WHITE);
         typedArray.recycle();
         return color;
+    }
+    public static boolean isFullScreen(Activity activity) {
+        int flag = activity.getWindow().getAttributes().flags;
+        if((flag & WindowManager.LayoutParams.FLAG_FULLSCREEN)
+                == WindowManager.LayoutParams.FLAG_FULLSCREEN) {
+            return true;
+        }else {
+            return false;
+        }
     }
 }

@@ -9,7 +9,7 @@ import android.provider.MediaStore;
 
 import com.lenovo.album.R;
 import com.lenovo.album.contract.FolderAlbumScannerContract;
-import com.lenovo.album.model.entity.ImageCursorLoader;
+import com.lenovo.album.model.helper.ImageCursorLoader;
 import com.lenovo.common.entity.FolderAlbumEntity;
 import com.lenovo.common.entity.ImageEntity;
 import com.lenovo.common.entity.LabelEntity;

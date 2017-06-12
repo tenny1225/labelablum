@@ -50,4 +50,6 @@ dependencies {
 
     compile 'com.bm.photoview:library:1.4.1'
     compile 'com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2@aar'
+    compile "com.andkulikov:transitionseverywhere:1.7.4"
+    compile 'me.drakeet.multitype:multitype:3.0.1'
 }

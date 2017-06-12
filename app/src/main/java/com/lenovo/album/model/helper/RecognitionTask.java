@@ -1,4 +1,4 @@
-package com.lenovo.album.model.entity;
+package com.lenovo.album.model.helper;
 
 import android.util.Log;
 
@@ -19,9 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * Created by noahkong on 17-6-6.
@@ -77,7 +75,7 @@ public class RecognitionTask extends AsyncExecutorQueueManager.SimpleTask {
 
         imageLock.unlock();
 
-        Log.d("xz", imageEntity.path + "," + imageEntity.name);
+
 
         IRecognition recognition = new CImageRecognitionImpl();
         String[] tags = recognition.importing(out.toByteArray());
@@ -105,5 +103,6 @@ public class RecognitionTask extends AsyncExecutorQueueManager.SimpleTask {
         }
 
         return null;
+
     }
 }

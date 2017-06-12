@@ -1,4 +1,4 @@
-package com.lenovo.album.ui.fragment.anim;
+package com.lenovo.album.ui.fragment.helper;
 
 import android.annotation.TargetApi;
 import android.content.Context;

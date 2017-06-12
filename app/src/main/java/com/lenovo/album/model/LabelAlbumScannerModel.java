@@ -2,6 +2,7 @@ package com.lenovo.album.model;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.lenovo.album.MyApplication;
 import com.lenovo.album.base.Constant;
@@ -21,7 +22,7 @@ import java.util.List;
 
 public class LabelAlbumScannerModel implements LabelAlbumScannerContract.Model {
     @Override
-    public void searchAllAlbum(Context ctx, ModelResponse<List<LabelAlbumEntity>> listener) {
+    public void searchAllAlbum(Context ctx, final ModelResponse<List<LabelAlbumEntity>> listener) {
         new AsyncTask<Void, Void, List<LabelAlbumEntity>>() {
             @Override
             protected List<LabelAlbumEntity> doInBackground(Void... params) {
@@ -35,10 +36,12 @@ public class LabelAlbumScannerModel implements LabelAlbumScannerContract.Model {
                         .where(LabelEntityDao.Properties.Selected.eq(true))
                         .orderDesc(LabelEntityDao.Properties.OrderIndex)
                         .list();
+                Log.e("xz","list size "+labelEntityList.size());
 
                 for (LabelEntity labelEntity : labelEntityList) {
 
                     LabelAlbumEntity labelAlbumEntity = new LabelAlbumEntity();
+
                     List<ImageEntity> imageEntityList = labelEntity.getImageEntityList();
 
                     labelAlbumEntity.imageList = imageEntityList;
@@ -53,7 +56,10 @@ public class LabelAlbumScannerModel implements LabelAlbumScannerContract.Model {
                         covers.add(imageEntityList.get(i));
 
                     }
+
                     labelAlbumEntity.covers = covers;
+                    labelAlbumEntity.sortImageListByUpdatedDate();
+                    labelAlbumEntityArrayList.add(labelAlbumEntity);
 
                 }
                 return labelAlbumEntityArrayList;
@@ -62,6 +68,9 @@ public class LabelAlbumScannerModel implements LabelAlbumScannerContract.Model {
             @Override
             protected void onPostExecute(List<LabelAlbumEntity> labelAlbumEntities) {
                 super.onPostExecute(labelAlbumEntities);
+                if(listener!=null){
+                    listener.onSuccess(labelAlbumEntities);
+                }
             }
         }.executeOnExecutor(ExecutorServiceFactory.createSearchExecutor());
 
