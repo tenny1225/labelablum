@@ -27,7 +27,7 @@ public interface LabelAlbumScannerContract {
         List<LabelAlbumEntity> getLabelAlbumEntityList();
 
         void searchAllAlbum();
-
+        void updateLabelAlbum();
     }
 
     interface Model extends BaseContract.BaseModel {
@@ -37,6 +37,7 @@ public interface LabelAlbumScannerContract {
          * @param listener 结果监听
          */
         void searchAllAlbum(Context ctx, BaseContract.BaseModel.ModelResponse<List<LabelAlbumEntity>> listener);
+        void updateLabelAlbum(List<LabelAlbumEntity> labelAlbumEntities,BaseContract.BaseModel.ModelResponse<String> listener);
         void cancelSearch();
     }
 }

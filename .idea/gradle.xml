@@ -11,7 +11,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/photoview" />
-            <option value="$PROJECT_DIR$/recognition_algorithm" />
+            <option value="$PROJECT_DIR$/recognition" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

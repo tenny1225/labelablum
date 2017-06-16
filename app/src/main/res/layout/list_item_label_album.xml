@@ -7,22 +7,38 @@
     android:gravity="center"
     android:orientation="vertical">
 
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:layout_width="320px"
+        android:layout_height="320px"
+        app:layout_auto_baseheight="width">
 
         <ImageView
-            android:scaleType="centerCrop"
             android:id="@+id/iv_album_cover"
             android:layout_width="300px"
             android:layout_height="300px"
+            android:layout_margin="20px"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher"
             app:layout_auto_baseheight="width" />
 
-        <TextView
-            android:id="@+id/tv_album_name"
+        <android.support.design.widget.FloatingActionButton
+
+            android:id="@+id/btn_album_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30px"
-            android:text="test"
-            android:textColor="?attr/txtColor"
-            android:textSize="26px" />
+            android:layout_alignRight="@id/iv_album_cover"
+            android:src="@mipmap/ic_mode_edit_white_36dp"
+            app:fabSize="mini" />
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_album_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30px"
+        android:text="test"
+        android:textColor="?attr/txtColor"
+        android:textSize="26px" />
 
 
 </com.zhy.autolayout.AutoLinearLayout>

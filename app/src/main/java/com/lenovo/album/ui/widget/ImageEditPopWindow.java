@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.PopupWindow;
 
 import com.lenovo.album.R;
@@ -14,14 +15,16 @@ import com.lenovo.album.R;
  */
 
 public class ImageEditPopWindow extends PopupWindow implements View.OnClickListener {
+    public final static int EDIT = 0;
+    public final static int SHARE = 1;
+    public final static int DELETE = 2;
+    public final static int RECOGNITION = 3;
+
     public interface ImageActionPopWindowListener {
-        void onShare();
 
-        void onRecognition();
+        void onPopAction(int action);
 
-        void onDelete();
 
-        void onEdit();
     }
 
     private ImageActionPopWindowListener imageActionPopWindowListener;
@@ -33,6 +36,8 @@ public class ImageEditPopWindow extends PopupWindow implements View.OnClickListe
     public ImageEditPopWindow(Context context) {
         super(context);
         View view = LayoutInflater.from(context).inflate(R.layout.pop_image_edit, null);
+        setWidth(-2);
+        setHeight(-2);
         setContentView(view);
         setTouchable(true);
         setFocusable(true);
@@ -48,22 +53,22 @@ public class ImageEditPopWindow extends PopupWindow implements View.OnClickListe
         switch (v.getId()) {
             case R.id.rl_recognition:
                 if (imageActionPopWindowListener != null) {
-                    imageActionPopWindowListener.onRecognition();
+                    imageActionPopWindowListener.onPopAction(RECOGNITION);
                 }
                 break;
             case R.id.rl_share:
                 if (imageActionPopWindowListener != null) {
-                    imageActionPopWindowListener.onShare();
+                    imageActionPopWindowListener.onPopAction(SHARE);
                 }
                 break;
             case R.id.rl_delete:
                 if (imageActionPopWindowListener != null) {
-                    imageActionPopWindowListener.onDelete();
+                    imageActionPopWindowListener.onPopAction(DELETE);
                 }
                 break;
             case R.id.rl_edit:
                 if (imageActionPopWindowListener != null) {
-                    imageActionPopWindowListener.onEdit();
+                    imageActionPopWindowListener.onPopAction(EDIT);
                 }
                 break;
         }

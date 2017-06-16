@@ -47,12 +47,39 @@ public class LabelAlbumScannerPresenter implements LabelAlbumScannerContract.Pre
         model.searchAllAlbum(context, new BaseContract.BaseModel.ModelResponse<List<LabelAlbumEntity>>() {
             @Override
             public void onSuccess(List<LabelAlbumEntity> data) {
+                if(data==null){
+                    return;
+                }
 
                 labelAlbumEntityList.clear();
+                labelAlbumEntityList.add(null);
                 labelAlbumEntityList.addAll(data);
                 if (view != null) {
                     view.refreshListView();
                 }
+            }
+
+            @Override
+            public void onFailure(String msg) {
+
+            }
+        });
+    }
+
+    @Override
+    public void updateLabelAlbum() {
+        List<LabelAlbumEntity> list = new ArrayList<>();
+        for (int i = 0; i < labelAlbumEntityList.size(); i++) {
+            LabelAlbumEntity entity = labelAlbumEntityList.get(i);
+            if (entity != null) {
+                entity.setSortIndex(labelAlbumEntityList.size() - i);
+                list.add(entity);
+            }
+        }
+        model.updateLabelAlbum(list, new BaseContract.BaseModel.ModelResponse<String>() {
+            @Override
+            public void onSuccess(String data) {
+
             }
 
             @Override

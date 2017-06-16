@@ -49,9 +49,12 @@ public class FolderAlbumScannerPresenter implements FolderAlbumScannerContract.P
         model.searchAllAlbum(context, new BaseContract.BaseModel.ModelResponse<List<FolderAlbumEntity>>() {
             @Override
             public void onSuccess(List<FolderAlbumEntity> data) {
+                if (data == null) {
+                    return;
+                }
                 folderAlbumEntityList.clear();
                 folderAlbumEntityList.addAll(data);
-                if(view!=null){
+                if (view != null) {
                     view.refreshListView();
                 }
             }

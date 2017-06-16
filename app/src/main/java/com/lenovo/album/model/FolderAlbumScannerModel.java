@@ -30,14 +30,7 @@ public class FolderAlbumScannerModel implements FolderAlbumScannerContract.Model
 
     @Override
     public void searchAllAlbum(final Context ctx, final ModelResponse<List<FolderAlbumEntity>> listener) {
-       /* imageCursorLoader = new CursorLoader(
-                ctx.getApplicationContext(),
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                IMAGE_PROJECTION,
-                null,
-                null,
-                MediaStore.Images.Media.DEFAULT_SORT_ORDER
-        );*/
+
         imageCursorLoader = new ImageCursorLoader(ctx.getApplicationContext());
 
 

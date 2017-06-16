@@ -12,7 +12,7 @@ public class ExecutorServiceFactory {
     private static ExecutorService searchExecutor;
     public static ExecutorService createSearchExecutor(){
         if(searchExecutor==null){
-            searchExecutor = Executors.newFixedThreadPool(4);
+            searchExecutor = Executors.newFixedThreadPool(2);
         }
         return searchExecutor;
     }
@@ -20,7 +20,7 @@ public class ExecutorServiceFactory {
     private static ExecutorService algorithmExecutor;
     public static ExecutorService  createAlgorithmExecutor(){
         if(algorithmExecutor==null){
-            algorithmExecutor = Executors.newFixedThreadPool(4);
+            algorithmExecutor = Executors. newFixedThreadPool(1);
         }
         return algorithmExecutor;
     }

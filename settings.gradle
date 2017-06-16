@@ -1,1 +1,1 @@
-include ':app', ':recognition_algorithm', ':common',':photoview'
+include ':app',  ':common', ':photoview', ':recognition'

@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.lenovo.album.R;
+import com.lenovo.common.util.CommonUtil;
 import com.zhy.autolayout.utils.AutoUtils;
 
 /**
@@ -51,7 +52,7 @@ public class FilletView extends View {
         icon = typedArray.getDrawable(R.styleable.FilletView_fv_icon);
         iconTint = typedArray.getColor(R.styleable.FilletView_fv_iconTint, Color.WHITE);
         textMargin = typedArray.getDimension(R.styleable.FilletView_fv_textMargin, 8);
-       // textMargin =  AutoUtils.getPercentWidth1px()*textMargin;
+        // textMargin =  AutoUtils.getPercentWidth1px()*textMargin;
         typedArray.recycle();
         init();
     }
@@ -103,7 +104,6 @@ public class FilletView extends View {
         int h = 0;
 
 
-
         if (MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.EXACTLY) {
             h = MeasureSpec.getSize(heightMeasureSpec);
 
@@ -130,7 +130,7 @@ public class FilletView extends View {
             paint.getTextBounds(text, 0, text.length(), bound);
             w += bound.width();
             w += (h - getPaddingTop() - getPaddingBottom());
-            w += textMargin ;
+            w += textMargin;
             if (icon != null) {
                 w += 3 * (bound.height()) / 2;
             }
@@ -171,26 +171,38 @@ public class FilletView extends View {
 
         if (icon != null) {
             Rect rectF = new Rect(
-                    (int) (rect.right - rect.height()+textMargin/2),
-                    (int) (rect.top+textMargin/2),
-                    (int) (rect.right-textMargin/2),
-                    (int) (rect.bottom-textMargin/2)
+                    (int) (rect.right - rect.height() + textMargin / 2),
+                    (int) (rect.top + textMargin / 2),
+                    (int) (rect.right - textMargin / 2),
+                    (int) (rect.bottom - textMargin / 2)
             );
 
             canvas.drawText(text, rect.centerX() - rectF.width() / 2, getHeight() / 2 - metricsInt.bottom / 2 - metricsInt.top / 2, paint);
 
 
-
-            DrawableCompat.setTint(icon,iconTint);
+            DrawableCompat.setTint(icon, iconTint);
             icon.setBounds(rectF);
             icon.draw(canvas);
 
 
-            Log.d("xz", "22222");
         } else {
-            Log.d("xz", "11111");
+
             canvas.drawText(text, getWidth() / 2, getHeight() / 2 - metricsInt.bottom / 2 - metricsInt.top / 2, paint);
         }
+    }
 
+    public static int getViewWidth(Context context, String str) {
+        int w = 0;
+        int paddingWidth = 0;
+        w += paddingWidth;
+        Rect bound = new Rect();
+        Paint paint = new Paint();
+        paint.setTextSize(CommonUtil.dip2px(context, 12));
+
+        paint.getTextBounds(str, 0, str.length(), bound);
+        w += bound.width();
+        w += CommonUtil.dip2px(context, 30);
+        w += CommonUtil.dip2px(context, 8);
+        return w;
     }
 }

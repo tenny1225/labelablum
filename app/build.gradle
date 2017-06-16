@@ -22,9 +22,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    externalNativeBuild {
-        cmake {
-            path "CMakeLists.txt"
+
+    sourceSets{
+        main{
+            jniLibs.srcDirs=["libs"]
         }
     }
 }
@@ -41,15 +42,16 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     compile project(':common')
-    compile project(':recognition_algorithm')
+    compile project(':recognition')
+    compile project(':photoview')
     compile 'com.zhy:autolayout:1.4.5'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'me.yokeyword:fragmentation:0.10.6'
     compile 'com.jaeger.statusbarutil:library:1.4.0'
     compile 'com.github.bumptech.glide:glide:4.0.0-RC0'
-
-    compile 'com.bm.photoview:library:1.4.1'
+    /* compile 'com.bm.photoview:library:1.4.1'*/
     compile 'com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2@aar'
-    compile "com.andkulikov:transitionseverywhere:1.7.4"
+    compile 'com.andkulikov:transitionseverywhere:1.7.4'
     compile 'me.drakeet.multitype:multitype:3.0.1'
+
 }

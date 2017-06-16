@@ -18,14 +18,19 @@ public class AlbumEntity extends BaseEntity {
         if (imageList == null) {
             return;
         }
-        Collections.sort(imageList, new Comparator<ImageEntity>() {
-            @Override
-            public int compare(ImageEntity o1, ImageEntity o2) {
-                if (o1.updated < o2.updated) {
-                    return 1;
+        try{
+            Collections.sort(imageList, new Comparator<ImageEntity>() {
+                @Override
+                public int compare(ImageEntity o1, ImageEntity o2) {
+                    if (o1.updated < o2.updated) {
+                        return 1;
+                    }
+                    return -1;
                 }
-                return -1;
-            }
-        });
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 }

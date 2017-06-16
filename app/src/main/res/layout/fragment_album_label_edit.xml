@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f3f3f3"
+    android:orientation="vertical">
+
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="?attr/colorPrimary"
+
+        >
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="?actionBarSize"
+            android:layout_height="?actionBarSize"
+            android:layout_centerVertical="true"
+            android:padding="30px"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_arrow_back_white_36dp"
+            app:layout_auto_basewidth="height" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+
+            android:layout_toRightOf="@id/iv_back"
+            android:gravity="center"
+            android:text="@string/edit_label"
+            android:textColor="#fff"
+            android:textSize="36px" />
+
+        <ImageView
+            android:id="@+id/iv_plus"
+            android:layout_width="?actionBarSize"
+            android:layout_height="?actionBarSize"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="30px"
+            android:src="@mipmap/ic_done_white_36dp"
+            app:layout_auto_basewidth="height" />
+
+        <ImageView
+            android:id="@+id/iv_delete"
+            android:layout_width="?actionBarSize"
+            android:layout_height="?actionBarSize"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/iv_plus"
+            android:padding="30px"
+            android:src="@mipmap/ic_delete_white_36dp"
+            android:visibility="gone"
+            app:layout_auto_basewidth="height" />
+
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120px"
+        android:gravity="center"
+        android:padding="25px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/album_name"
+            android:textColor="#555"
+            android:textSize="30px" />
+
+        <EditText
+            android:id="@+id/et_ablum_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10px"
+            android:background="#fff"
+            android:maxLength="10"
+            android:padding="12px" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#e3e3e3" />
+
+    <android.support.v7.widget.RecyclerView
+
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+</com.zhy.autolayout.AutoLinearLayout>

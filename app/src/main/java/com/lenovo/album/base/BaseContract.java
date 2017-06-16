@@ -22,6 +22,7 @@ public interface BaseContract {
     }
 
     interface BaseModel {
+        public static final String SUCCESS = "success";
         interface ModelResponse<T> {
 
             void onSuccess(T data);

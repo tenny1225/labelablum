@@ -49,7 +49,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRe
     public void setListItemClickListener(ListItemClickListener<T> listItemClickListener) {
         this.listItemClickListener = listItemClickListener;
     }
-    private ListItemHolderClickListener<T> listItemHolderClickListener;
+    protected ListItemHolderClickListener<T> listItemHolderClickListener;
 
     public void setListItemHolderClickListener(ListItemHolderClickListener<T> listItemHolderClickListener) {
         this.listItemHolderClickListener = listItemHolderClickListener;

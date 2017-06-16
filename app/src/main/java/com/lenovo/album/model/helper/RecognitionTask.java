@@ -1,16 +1,22 @@
 package com.lenovo.album.model.helper;
 
+import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.lenovo.album.MyApplication;
+import com.lenovo.album.imageloader.ImageLoaderFactory;
 import com.lenovo.common.entity.ImageEntity;
 import com.lenovo.common.entity.JoinImageLabelEntity;
 import com.lenovo.common.entity.LabelEntity;
 import com.lenovo.common.manager.AsyncExecutorQueueManager;
 import com.lenovo.greendao.gen.ImageEntityDao;
+import com.lenovo.greendao.gen.JoinImageLabelEntityDao;
 import com.lenovo.greendao.gen.LabelEntityDao;
-import com.lenovo.recognitionalgorithm.CImageRecognitionImpl;
-import com.lenovo.recognitionalgorithm.IRecognition;
+
+
+import org.tensorflow.demo.IRecognition;
+import org.tensorflow.demo.RecognitionFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -18,6 +24,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -29,9 +36,11 @@ public class RecognitionTask extends AsyncExecutorQueueManager.SimpleTask {
     public static Lock imageLock = new ReentrantLock(false);
     public static Lock labelLock = new ReentrantLock(false);
     private File file;
+    private Context context;
 
-    public void setFile(File file) {
+    public void setData(Context context, File file) {
         this.file = file;
+        this.context = context.getApplicationContext();
     }
 
     @Override
@@ -39,21 +48,7 @@ public class RecognitionTask extends AsyncExecutorQueueManager.SimpleTask {
         if (file == null || !file.exists()) {
             return null;
         }
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        byte[] buffer = new byte[1024];
-        try {
-            InputStream inputStream = new FileInputStream(file);
-            int n = 0;
-            while ((n = inputStream.read(buffer)) != -1) {
-                out.write(buffer, 0, n);
-            }
-            inputStream.close();
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         ImageEntity imageEntity = new ImageEntity();
         imageEntity.updated = file.lastModified();
@@ -73,16 +68,16 @@ public class RecognitionTask extends AsyncExecutorQueueManager.SimpleTask {
 
         MyApplication.getInstances().getDaoSession().getImageEntityDao().insert(imageEntity);
 
-        imageLock.unlock();
+
+        IRecognition recognition = RecognitionFactory.getRecognition(context);
+
+        String[] tags = recognition.importing(ImageLoaderFactory.getLoader().getBitmap(context, file.getAbsolutePath()));
 
 
-
-        IRecognition recognition = new CImageRecognitionImpl();
-        String[] tags = recognition.importing(out.toByteArray());
         for (String tag : tags) {
             LabelEntity labelEntity = new LabelEntity();
             labelEntity.name = tag;
-            labelLock.lock();
+
             if (MyApplication.getInstances().getDaoSession().getLabelEntityDao().queryBuilder().where(
                     LabelEntityDao.Properties.Name.eq(tag)).count() > 0) {
                 labelEntity = MyApplication.getInstances().getDaoSession().getLabelEntityDao().queryBuilder().where(
@@ -91,18 +86,20 @@ public class RecognitionTask extends AsyncExecutorQueueManager.SimpleTask {
             } else {
                 MyApplication.getInstances().getDaoSession().getLabelEntityDao().insert(labelEntity);
             }
-            labelLock.unlock();
 
-            //构建图片和标签的多对多映射
-            JoinImageLabelEntity joinImageLabelEntity = new JoinImageLabelEntity();
-            joinImageLabelEntity.imageId = imageEntity.id;
-            joinImageLabelEntity.labelId = labelEntity.id;
+            if (MyApplication.getInstances().getDaoSession().getJoinImageLabelEntityDao().queryBuilder()
+                    .where(JoinImageLabelEntityDao.Properties.ImageId.eq(imageEntity.id),
+                            JoinImageLabelEntityDao.Properties.LabelId.eq(labelEntity.id)).count() == 0) {
+                //构建图片和标签的多对多映射
+                JoinImageLabelEntity joinImageLabelEntity = new JoinImageLabelEntity();
+                joinImageLabelEntity.imageId = imageEntity.id;
+                joinImageLabelEntity.labelId = labelEntity.id;
 
-            MyApplication.getInstances().getDaoSession().getJoinImageLabelEntityDao().insert(joinImageLabelEntity);
-
+                MyApplication.getInstances().getDaoSession().getJoinImageLabelEntityDao().insert(joinImageLabelEntity);
+            }
         }
+        imageLock.unlock();
 
         return null;
-
     }
 }

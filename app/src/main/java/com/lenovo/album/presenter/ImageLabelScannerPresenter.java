@@ -1,6 +1,7 @@
 package com.lenovo.album.presenter;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.lenovo.album.base.BaseContract;
 import com.lenovo.album.contract.ImageLabelScannerContract;
@@ -40,7 +41,9 @@ public class ImageLabelScannerPresenter implements ImageLabelScannerContract.Pre
         model.queryLabels(uniqueString, new BaseContract.BaseModel.ModelResponse<List<LabelEntity>>() {
             @Override
             public void onSuccess(List<LabelEntity> data) {
+
                 if(view!=null&&data!=null){
+
                     view.showLabels(data);
                 }
             }

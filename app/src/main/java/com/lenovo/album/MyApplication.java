@@ -11,7 +11,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 import android.speech.RecognitionService;
 
+import com.bumptech.glide.Glide;
+
 import com.lenovo.album.event.PermissionGatedEvent;
+import com.lenovo.album.imageloader.ImageLoaderFactory;
 import com.lenovo.album.service.ImageRecognitionService;
 import com.lenovo.greendao.gen.DaoMaster;
 import com.lenovo.greendao.gen.DaoSession;
@@ -44,8 +47,20 @@ public class MyApplication extends Application {
         instances = this;
         setDatabase();
         EventBus.getDefault().register(this);
-
     }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        ImageLoaderFactory.getLoader().clearMemory(this);
+    }
+
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+        ImageLoaderFactory.getLoader().trimMemory(this, level);
+    }
+
 
     @Override
     public void onTerminate() {

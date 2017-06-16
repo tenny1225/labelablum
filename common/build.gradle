@@ -23,7 +23,7 @@ android {
 apply plugin: 'org.greenrobot.greendao'
 
 greendao {
-    schemaVersion 3
+    schemaVersion 6
     daoPackage 'com.lenovo.greendao.gen'
     targetGenDir 'src/main/java'
 }
@@ -36,4 +36,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile'org.greenrobot:greendao:3.0.1'
     compile'org.greenrobot:greendao-generator:3.0.0'
+    compile 'com.google.code.gson:gson:2.8.1'
 }

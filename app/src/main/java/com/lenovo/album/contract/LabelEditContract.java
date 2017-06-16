@@ -9,7 +9,7 @@ import java.util.List;
  * Created by noahkong on 17-6-12.
  */
 
-public interface LabelEditContract  {
+public interface LabelEditContract {
 
     interface View extends BaseContract.BaseView {
         void refresh();

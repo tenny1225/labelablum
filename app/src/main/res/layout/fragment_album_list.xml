@@ -40,16 +40,15 @@
             android:src="@mipmap/ic_arrow_drop_down_white_18dp"
             app:layout_auto_basewidth="height" />
 
-        <TextView
-            android:layout_marginRight="30px"
-            android:id="@+id/tv_album_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+        <ImageView
+            android:id="@+id/iv_camera"
+            android:layout_width="?actionBarSize"
+            android:layout_height="?actionBarSize"
+            android:padding="35px"
             android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:text="@string/edit"
-            android:textColor="#fff"
-            android:textSize="30px" />
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_camera_enhance_white_36dp"
+            app:layout_auto_basewidth="height" />
     </com.zhy.autolayout.AutoRelativeLayout>
 
     <android.support.v7.widget.RecyclerView

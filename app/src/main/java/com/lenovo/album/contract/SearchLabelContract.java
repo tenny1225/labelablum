@@ -1,6 +1,7 @@
 package com.lenovo.album.contract;
 
 import com.lenovo.album.base.BaseContract;
+import com.lenovo.common.entity.ImageEntity;
 import com.lenovo.common.entity.LabelEntity;
 
 import java.util.List;
@@ -12,13 +13,17 @@ import java.util.List;
 public interface SearchLabelContract {
     interface View extends BaseContract.BaseView {
         void refresh();
+        void querySuccess();
     }
     interface Presenter extends BaseContract.BasePresenter {
         List<LabelEntity> getLabelEntities();
-        void query(String str);
+        List<ImageEntity> getImageEntities();
+        void queryCandidate(String str);
+        void queryImages(String str);
     }
     interface Model extends BaseContract.BaseModel {
-       void query(List<String> str,ModelResponse<List<LabelEntity>> response);
+        void queryCandidate(List<String> str,ModelResponse<List<LabelEntity>> response);
+        void queryImages(List<String> str,ModelResponse<List<ImageEntity>> response);
 
     }
 

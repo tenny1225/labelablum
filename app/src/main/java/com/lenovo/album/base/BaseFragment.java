@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.lenovo.album.contract.RecogniationContract;
 import com.lenovo.common.util.CommonUtil;
 
 import me.yokeyword.fragmentation.SupportFragment;
@@ -66,7 +67,7 @@ public abstract class BaseFragment extends SupportFragment {
         initSync();
         return rootView;
     }
-    protected <T> T $(int id){
+    protected <T extends View> T $(int id){
         return (T) rootView.findViewById(id);
     }
 

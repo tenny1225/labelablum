@@ -40,7 +40,7 @@ public class FolderAlbumShowAdapter extends BaseRecyclerAdapter<FolderAlbumEntit
         );
 
         holder.<TextView>$(R.id.tv_album_name).setText(obj.name);
-        holder.<FilletView>$(R.id.fv_image_count).setText(String.format(holder.<View>$(R.id.fv_image_count).getContext().getResources().getString(R.string.image_count_format).toString(),obj.imageList.size()));
+        //holder.<FilletView>$(R.id.fv_image_count).setText(String.format(holder.<View>$(R.id.fv_image_count).getContext().getResources().getString(R.string.image_count_format).toString(),obj.imageList.size()));
 
     }
 }

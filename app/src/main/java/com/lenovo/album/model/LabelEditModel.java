@@ -3,7 +3,6 @@ package com.lenovo.album.model;
 import android.os.AsyncTask;
 
 import com.lenovo.album.MyApplication;
-import com.lenovo.album.base.BaseContract;
 import com.lenovo.album.contract.LabelEditContract;
 import com.lenovo.common.entity.LabelEntity;
 import com.lenovo.common.manager.ExecutorServiceFactory;

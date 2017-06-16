@@ -1,9 +1,11 @@
 package com.lenovo.album.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import com.lenovo.album.R;
 import com.lenovo.album.base.BaseFragment;
 import com.lenovo.album.base.BaseRecyclerAdapter;
+import com.lenovo.album.ui.activity.StartActivity;
 import com.lenovo.album.ui.adapter.AlbumImageShowAdapter;
 import com.lenovo.album.ui.adapter.helper.GridItemDecoration;
 import com.lenovo.common.entity.AlbumEntity;
@@ -67,19 +70,24 @@ public class AlbumShowFragment extends BaseFragment implements BaseRecyclerAdapt
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         Bundle bundle = getArguments();
-        BundleEntity<FolderAlbumEntity> bundleEntity = (BundleEntity<FolderAlbumEntity>) bundle.getSerializable(ALBUM_PARAM);
+        BundleEntity<AlbumEntity> bundleEntity = (BundleEntity<AlbumEntity>) bundle.getSerializable(ALBUM_PARAM);
         albumName = bundle.getString(ALBUM_NAME);
 
-        bundleEntity.getData(activity, new BundleEntity.DataResponse<FolderAlbumEntity>() {
-            @Override
-            public void onSuccess(FolderAlbumEntity entity) {
-                if (albumEntity == null) {
-                    albumEntity = entity;
-                    initWidget(rootView);
+        if (albumEntity == null) {
+            bundleEntity.getData(activity, AlbumEntity.class,new BundleEntity.DataResponse<AlbumEntity>() {
+                @Override
+                public void onSuccess(AlbumEntity entity) {
+                    if(entity!=null){
+                        albumEntity = entity;
+                        initWidget(rootView);
+                    }else{
+                        startActivity(new Intent(activity, StartActivity.class));
+                        activity.finish();
+                    }
                 }
+            });
+        }
 
-            }
-        });
     }
 
     @Override
@@ -114,26 +122,13 @@ public class AlbumShowFragment extends BaseFragment implements BaseRecyclerAdapt
     @Override
     public void onItemHolderClick(BaseRecyclerAdapter.VH holder, ImageEntity imageEntity) {
 
-        //AlbumEntity entity = new AlbumEntity();
-        //entity.imageList = albumEntity.imageList;
+
         albumEntity.currentIndex = albumEntity.imageList.indexOf(imageEntity);
+
 
         ImageShowFragment fragment = ImageShowFragment.newInstance(new BundleEntity<>(activity, albumEntity));
         fragment.setAlbumEntity(albumEntity);
 
-       /* ImageShowNotScrollFragment fragment = ImageShowNotScrollFragment.newInstance(imageEntity);
-        fragment.setImageEntity(imageEntity);
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-            setExitTransition(new Fade());
-            fragment.setEnterTransition(new Fade());
-            fragment.setSharedElementReturnTransition(new DetailTransition());
-            fragment.setSharedElementEnterTransition(new DetailTransition());
-
-
-            fragment.transaction()
-                    .addSharedElement(holder.<ImageView>$(R.id.iv_image), getResources().getString(R.string.album_share_element_name))
-                    .commit();
-        }*/
         start(fragment);
 
     }

@@ -13,6 +13,15 @@
 
     <string name="album_share_element_name">asen</string>
 
+    <string name="album_name">相册名称：</string>
     <string name="selected_label">已选择标签：</string>
     <string name="not_select_label">未选择标签：</string>
+
+    <string name="add_album">添加相册</string>
+    <string name="edit_album">编辑相册</string>
+    <string name="add_label">添加标签</string>
+    <string name="label_name">标签名称：</string>
+    <string name="cacel">取消</string>
+    <string name="ok">确定</string>
+    <string name="demo">示例相册</string>
 </resources>

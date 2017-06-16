@@ -13,16 +13,25 @@ import android.widget.ImageView;
 
 import com.lenovo.album.R;
 import com.lenovo.album.base.BaseFragment;
+import com.lenovo.album.base.BaseRecyclerAdapter;
 import com.lenovo.album.contract.SearchLabelContract;
 import com.lenovo.album.presenter.SearchLabelPresenter;
 import com.lenovo.album.ui.adapter.SearchLabelAdapter;
+import com.lenovo.album.ui.widget.LoadingDialogUtil;
+import com.lenovo.common.entity.AlbumEntity;
+import com.lenovo.common.entity.BundleEntity;
+import com.lenovo.common.entity.ImageEntity;
+import com.lenovo.common.entity.LabelEntity;
 import com.lenovo.common.util.CommonUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by noahkong on 17-6-12.
  */
 
-public class SearchFragment extends BaseFragment implements SearchLabelContract.View {
+public class SearchFragment extends BaseFragment implements SearchLabelContract.View, BaseRecyclerAdapter.ListItemClickListener<LabelEntity> {
     public static SearchFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -38,6 +47,8 @@ public class SearchFragment extends BaseFragment implements SearchLabelContract.
     private SearchLabelAdapter adapter;
 
     private SearchLabelContract.Presenter presenter;
+
+    private boolean startQuery;
 
     @Override
     protected int getViewResource() {
@@ -72,14 +83,23 @@ public class SearchFragment extends BaseFragment implements SearchLabelContract.
 
             @Override
             public void afterTextChanged(Editable s) {
-                presenter.query(s.toString());
+                presenter.queryCandidate(s.toString());
             }
         });
         ivSearch = $(R.id.iv_search);
+        ivSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideSoftInput();
+                presenter.queryImages(etContent.getText().toString());
+                LoadingDialogUtil.showDialog(activity);
+            }
+        });
         recycler = $(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(activity));
 
         adapter = new SearchLabelAdapter(presenter.getLabelEntities());
+        adapter.setListItemClickListener(this);
 
         recycler.setAdapter(adapter);
     }
@@ -88,14 +108,66 @@ public class SearchFragment extends BaseFragment implements SearchLabelContract.
     protected void onEnterAnimationEnd(Bundle savedInstanceState) {
         super.onEnterAnimationEnd(savedInstanceState);
         etContent.requestFocus();
-        InputMethodManager imm =
-                (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        showSoftInput(etContent);
+        presenter.queryCandidate("");
+    }
 
-        imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+
     }
 
     @Override
     public void refresh() {
+
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void querySuccess() {
+        LoadingDialogUtil.closeDialog();
+
+        AlbumEntity entity = new AlbumEntity();
+
+        entity.imageList = presenter.getImageEntities();
+
+
+
+        BundleEntity<AlbumEntity> albumEntityBundleEntity = new BundleEntity<>(activity, entity);
+
+        AlbumShowFragment fragment = AlbumShowFragment.newInstance(albumEntityBundleEntity, etContent.getText().toString());
+        fragment.setAlbumEntity(entity);
+        start(fragment);
+    }
+
+    @Override
+    public void onItemClick(LabelEntity labelEntity) {
+        hideSoftInput();
+        String name = labelEntity.alias == null ? labelEntity.name : labelEntity.alias;
+        String text = etContent.getText().toString();
+        if (!text.endsWith(" ")) {
+            String[] array = text.split(" ");
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < array.length - 1; i++) {
+                String txt = array[i];
+                if (!txt.trim().equals("")) {
+                    builder.append(txt.trim());
+                    builder.append(" ");
+                }
+
+            }
+            String string = builder.toString();
+            etContent.setText(string);
+            etContent.setSelection(string.length());
+
+        }
+        etContent.getText().append(name + " ");
+
+    }
+
+    @Override
+    public void onItemLongClick(LabelEntity labelEntity) {
+
     }
 }

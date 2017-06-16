@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.autolayout.AutoFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?attr/colorPrimary"
-    android:orientation="vertical">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+   >
 
     <com.zhy.autolayout.AutoLinearLayout
+        android:background="?attr/colorPrimary"
         android:layout_width="400px"
         android:layout_height="wrap_content"
 
         android:orientation="vertical">
 
         <com.zhy.autolayout.AutoRelativeLayout
-            android:foreground="?attr/selectableItemBackground"
             android:id="@+id/rl_recognition"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:foreground="?attr/selectableItemBackground"
             android:padding="20px">
 
             <ImageView
@@ -37,10 +37,10 @@
         </com.zhy.autolayout.AutoRelativeLayout>
 
         <com.zhy.autolayout.AutoRelativeLayout
-            android:foreground="?attr/selectableItemBackground"
             android:id="@+id/rl_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:foreground="?attr/selectableItemBackground"
             android:padding="20px">
 
             <ImageView
@@ -61,10 +61,10 @@
         </com.zhy.autolayout.AutoRelativeLayout>
 
         <com.zhy.autolayout.AutoRelativeLayout
-            android:foreground="?attr/selectableItemBackground"
             android:id="@+id/rl_share"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:foreground="?attr/selectableItemBackground"
             android:padding="20px">
 
             <ImageView
@@ -85,10 +85,10 @@
         </com.zhy.autolayout.AutoRelativeLayout>
 
         <com.zhy.autolayout.AutoRelativeLayout
-            android:foreground="?attr/selectableItemBackground"
             android:id="@+id/rl_delete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:foreground="?attr/selectableItemBackground"
             android:padding="20px">
 
             <ImageView
@@ -110,4 +110,4 @@
 
     </com.zhy.autolayout.AutoLinearLayout>
 
-</com.zhy.autolayout.AutoLinearLayout>
+</com.zhy.autolayout.AutoFrameLayout>

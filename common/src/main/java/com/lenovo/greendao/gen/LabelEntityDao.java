@@ -13,6 +13,7 @@ import org.greenrobot.greendao.query.Query;
 import org.greenrobot.greendao.query.QueryBuilder;
 
 import com.lenovo.common.entity.JoinImageLabelEntity;
+import com.lenovo.common.entity.JoinLabelAllbumEntity;
 
 import com.lenovo.common.entity.LabelEntity;
 
@@ -34,11 +35,13 @@ public class LabelEntityDao extends AbstractDao<LabelEntity, Long> {
         public final static Property Alias = new Property(2, String.class, "alias", false, "ALIAS");
         public final static Property Selected = new Property(3, boolean.class, "selected", false, "SELECTED");
         public final static Property OrderIndex = new Property(4, long.class, "orderIndex", false, "ORDER_INDEX");
+        public final static Property Deleted = new Property(5, boolean.class, "deleted", false, "DELETED");
     };
 
     private DaoSession daoSession;
 
     private Query<LabelEntity> imageEntity_LabelEntityListQuery;
+    private Query<LabelEntity> labelAlbumEntity_LabelEntityListQuery;
 
     public LabelEntityDao(DaoConfig config) {
         super(config);
@@ -57,7 +60,8 @@ public class LabelEntityDao extends AbstractDao<LabelEntity, Long> {
                 "\"NAME\" TEXT UNIQUE ," + // 1: name
                 "\"ALIAS\" TEXT," + // 2: alias
                 "\"SELECTED\" INTEGER NOT NULL ," + // 3: selected
-                "\"ORDER_INDEX\" INTEGER NOT NULL );"); // 4: orderIndex
+                "\"ORDER_INDEX\" INTEGER NOT NULL ," + // 4: orderIndex
+                "\"DELETED\" INTEGER NOT NULL );"); // 5: deleted
     }
 
     /** Drops the underlying database table. */
@@ -86,6 +90,7 @@ public class LabelEntityDao extends AbstractDao<LabelEntity, Long> {
         }
         stmt.bindLong(4, entity.getSelected() ? 1L: 0L);
         stmt.bindLong(5, entity.getOrderIndex());
+        stmt.bindLong(6, entity.getDeleted() ? 1L: 0L);
     }
 
     @Override
@@ -108,6 +113,7 @@ public class LabelEntityDao extends AbstractDao<LabelEntity, Long> {
         }
         stmt.bindLong(4, entity.getSelected() ? 1L: 0L);
         stmt.bindLong(5, entity.getOrderIndex());
+        stmt.bindLong(6, entity.getDeleted() ? 1L: 0L);
     }
 
     @Override
@@ -128,7 +134,8 @@ public class LabelEntityDao extends AbstractDao<LabelEntity, Long> {
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // alias
             cursor.getShort(offset + 3) != 0, // selected
-            cursor.getLong(offset + 4) // orderIndex
+            cursor.getLong(offset + 4), // orderIndex
+            cursor.getShort(offset + 5) != 0 // deleted
         );
         return entity;
     }
@@ -140,6 +147,7 @@ public class LabelEntityDao extends AbstractDao<LabelEntity, Long> {
         entity.setAlias(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setSelected(cursor.getShort(offset + 3) != 0);
         entity.setOrderIndex(cursor.getLong(offset + 4));
+        entity.setDeleted(cursor.getShort(offset + 5) != 0);
      }
     
     @Override
@@ -174,6 +182,21 @@ public class LabelEntityDao extends AbstractDao<LabelEntity, Long> {
         }
         Query<LabelEntity> query = imageEntity_LabelEntityListQuery.forCurrentThread();
         query.setParameter(0, imageId);
+        return query.list();
+    }
+
+    /** Internal query to resolve the "labelEntityList" to-many relationship of LabelAlbumEntity. */
+    public List<LabelEntity> _queryLabelAlbumEntity_LabelEntityList(Long labelAlbumId) {
+        synchronized (this) {
+            if (labelAlbumEntity_LabelEntityListQuery == null) {
+                QueryBuilder<LabelEntity> queryBuilder = queryBuilder();
+                queryBuilder.join(JoinLabelAllbumEntity.class, JoinLabelAllbumEntityDao.Properties.LabelId)
+                    .where(JoinLabelAllbumEntityDao.Properties.LabelAlbumId.eq(labelAlbumId));
+                labelAlbumEntity_LabelEntityListQuery = queryBuilder.build();
+            }
+        }
+        Query<LabelEntity> query = labelAlbumEntity_LabelEntityListQuery.forCurrentThread();
+        query.setParameter(0, labelAlbumId);
         return query.list();
     }
 
