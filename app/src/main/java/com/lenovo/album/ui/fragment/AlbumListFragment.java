@@ -184,7 +184,6 @@ public class AlbumListFragment extends BaseFragment implements FolderAlbumScanne
             public void onItemHolderClick(BaseRecyclerAdapter.VH holder, LabelAlbumEntity labelAlbumEntity) {
 
                 if (labelAlbumEntity == null) {
-
                     start(LabelAlbumEditFragment.newInstance(0, LabelAlbumEditFragment.ADD));
                     return;
                 }
@@ -195,6 +194,15 @@ public class AlbumListFragment extends BaseFragment implements FolderAlbumScanne
                 }
                 AlbumEntity entity = new AlbumEntity();
                 entity.imageList = labelAlbumEntity.imageList;
+
+                /**
+                 * 防止循环引用的发生
+                 */
+                for (ImageEntity entity1 : entity.imageList) {
+                    if (entity1.getLabelEntityList() != null) {
+                        entity1.getLabelEntityList().clear();
+                    }
+                }
 
                 AlbumShowFragment fragment = AlbumShowFragment.newInstance(new BundleEntity<AlbumEntity>(activity, entity), labelAlbumEntity.alias == null ? labelAlbumEntity.name : labelAlbumEntity.alias);
                 fragment.setAlbumEntity(entity);

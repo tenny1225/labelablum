@@ -48,12 +48,15 @@ public class LabelAlbumScannerModel implements LabelAlbumScannerContract.Model {
                     for (LabelEntity labelEntity : entity.getLabelEntityList()) {
                         labelEntity.resetImageEntityList();
                         entity.imageList.addAll(labelEntity.getImageEntityList());
-                        labelEntity.imageEntityList.clear();
+                        labelEntity.getImageEntityList().clear();
                     }
+
                     Iterator<ImageEntity> iterator =  entity.imageList.iterator();
                     Set<String> set = new HashSet<String>();
                     while(iterator.hasNext()){
                         ImageEntity imageEntity = iterator.next();
+                        imageEntity.getLabelEntityList().clear();
+
                         File file = new File(imageEntity.path);
                         if(set.contains(imageEntity.uniqueString)){
                             iterator.remove();
@@ -63,7 +66,6 @@ public class LabelAlbumScannerModel implements LabelAlbumScannerContract.Model {
                             iterator.remove();
                             continue;
                         }
-                        imageEntity.getLabelEntityList().clear();
                         set.add(imageEntity.uniqueString);
                     }
                     List<ImageEntity> covers = new ArrayList<ImageEntity>();

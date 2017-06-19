@@ -44,6 +44,7 @@ public class ImageEntity extends BaseEntity {
             sourceProperty = "imageId",
             targetProperty = "labelId"
     )
+    @Ignore
     public List<LabelEntity> labelEntityList;//图片标签
 
 

@@ -174,7 +174,7 @@ public class BundleEntity<T> implements Serializable {
     public static <T> T deserialize(String jsonString, Class<T> clazz) {
         GsonBuilder builder = new GsonBuilder();
         builder.setDateFormat("MM/dd/yy HH:mm:ss");
-
+        builder.addSerializationExclusionStrategy(new IgnoreStrategy());
         Gson gson = builder.create();
         return gson.fromJson(jsonString, clazz);
     }
